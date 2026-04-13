@@ -397,7 +397,7 @@ const AboutSection = () => {
                     </p>
                   </div>
 
-                  {/* Quick Stats */}
+                  {/* Quick  */}
                   <div className="grid grid-cols-2 gap-3 mb-6">
                     {stats.map((stat, i) => (
                       <motion.div
