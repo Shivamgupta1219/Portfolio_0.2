@@ -64,7 +64,7 @@ const ProjectSection = () => {
         >
           {/* Heading */}
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-gray-900 dark:text-white">
-            My <span className="text-blue-500">Projects</span>
+            My <span className="text-blue-500">Work</span>
           </h2>
 
           <p className="text-gray-600 dark:text-gray-400 text-center max-w-2xl mx-auto mb-12">
@@ -178,12 +178,12 @@ const ProjectSection = () => {
           </motion.div>
 
           {/* View More */}
-          <div className="text-center mt-12">
+          {/* <div className="text-center mt-12">
             <button className="px-8 py-3 rounded-lg border border-blue-500/40 text-blue-500 hover:bg-blue-500/10 transition flex items-center gap-2 mx-auto">
               <Layers className="h-5 w-5" />
               View All Projects
             </button>
-          </div>
+          </div> */}
         </motion.div>
       </div>
     </section>

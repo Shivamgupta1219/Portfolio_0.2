@@ -82,10 +82,11 @@ const Index = () => {
 
         <main>
           <HeroSection />
-          <AboutSection />
-          <ProjectSection />
           <ExperienceSection />
+          <ProjectSection />
           <SkillsSection />
+          <AboutSection />
+
           <ContactSection />
         </main>
 

@@ -80,7 +80,7 @@ const ContactSection = () => {
         >
           {/* Heading */}
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">
-            Get In <span className="text-blue-500">Touch</span>
+            Let's <span className="text-blue-500">Connect</span>
           </h2>
 
           <p className="text-gray-400 text-center max-w-2xl mx-auto mb-16">

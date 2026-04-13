@@ -37,7 +37,7 @@ export default function ExperienceSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-blue-500 font-mono mb-2">02 — WORK HISTORY</p>
+          <p className="text-blue-500 font-mono mb-2"> — WORK HISTORY</p>
 
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             Experience &{" "}

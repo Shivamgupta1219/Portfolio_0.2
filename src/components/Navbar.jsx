@@ -5,10 +5,10 @@ import { Moon, Sun, Menu, X } from "lucide-react";
 
 const navItems = [
   { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
-  { name: "Projects", href: "#projects" },
-  { name: "Skills", href: "#skills" },
-  { name: "Contact", href: "#contact" },
+  { name: "About Me", href: "#about" },
+  { name: "My Work", href: "#projects" },
+  { name: "Tech Stack", href: "#skills" },
+  { name: "Let’s Connect", href: "#contact" },
 ];
 
 const Navbar = () => {

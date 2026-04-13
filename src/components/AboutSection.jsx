@@ -15,6 +15,7 @@ import {
   Book,
   Gamepad2,
 } from "lucide-react";
+import CountUp from "./CountUp";
 import profileImg from "../assets/ShivamGupta_img.jpeg";
 const timeline = [
   {
@@ -106,10 +107,10 @@ const funFacts = [
 ];
 
 const stats = [
-  { label: "Projects Built", value: "2+", icon: "🚀" },
-  { label: "Coffee Consumed", value: "2,000+", icon: "☕" },
-  { label: "Code Lines", value: "100K+", icon: "💻" },
-  { label: "Hours Learning", value: "5,000+", icon: "📚" },
+  { label: "Real Projects Built", value: 5, suffix: "+", icon: "🚀" },
+  { label: "Coffee Consumed", value: 2000, suffix: "+", icon: "☕" },
+  { label: "Code Lines", value: 100000, suffix: "+", icon: "💻" },
+  { label: "Hours Learning", value: 5000, suffix: "+", icon: "📚" },
 ];
 
 const TimelineItem = ({ item, index, isInView }) => {
@@ -407,9 +408,16 @@ const AboutSection = () => {
                         className="bg-white dark:bg-gray-800 rounded-xl p-4 text-center shadow-md border border-gray-100 dark:border-gray-700"
                       >
                         <div className="text-2xl mb-1">{stat.icon}</div>
-                        <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
-                          {stat.value}
-                        </div>
+                 <div className="text-2xl font-bold text-gray-900 dark:text-white">
+  <CountUp
+    from={0}
+    to={stat.value}
+    duration={2}
+    separator=","
+    startCounting={isInView}
+  />
+  {stat.suffix}
+</div>
                         <div className="text-xs text-gray-500 dark:text-gray-400">
                           {stat.label}
                         </div>

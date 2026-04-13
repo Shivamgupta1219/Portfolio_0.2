@@ -1,6 +1,22 @@
 /* eslint-disable no-unused-vars */
 import { useInView, motion } from "framer-motion";
 import { useRef } from "react";
+import {
+  FaNodeJs,
+  FaGithub,
+  FaAngular,
+  FaReact,
+  FaJava,
+  FaJs,
+  FaHtml5,
+  FaCss3Alt
+} from "react-icons/fa";
+
+import {
+  SiMongodb,
+  SiTailwindcss,
+  SiMysql
+} from "react-icons/si";
 
 const skillCategories = [
   {
@@ -39,7 +55,12 @@ const skillCategories = [
 const SkillBar = ({ name, level, color, delay }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
-
+  
+const techIconsMap = {
+  Frontend: [FaReact, FaJs, FaHtml5, FaCss3Alt, SiTailwindcss],
+  Backend: [FaNodeJs, SiMongodb, SiMysql],
+  "Tools & Others": [FaGithub, FaJava]
+};
   return (
     <div ref={ref} className="mb-4">
       <div className="flex justify-between mb-2">
@@ -65,7 +86,19 @@ const SkillBar = ({ name, level, color, delay }) => {
   );
 };
 
-const floatingIcons = ["⚛️", "📦", "🎨", "🔥", "🐙", "🚀"];
+const floatingIcons = [
+  FaReact,
+  FaNodeJs,
+  FaGithub,
+  FaAngular,
+  FaJava,
+  FaJs,
+  FaHtml5,
+  FaCss3Alt,
+  SiTailwindcss,
+  SiMongodb,
+  SiMysql
+];
 
 const SkillsSection = () => {
   const ref = useRef(null);
@@ -82,24 +115,24 @@ const SkillsSection = () => {
       </div>
       {/* Floating Icons */}
       <div className="absolute inset-0 pointer-events-none">
-        {floatingIcons.map((icon, index) => (
-          <motion.div
-            key={index}
-            className="absolute text-4xl opacity-10"
-            style={{
-              left: `${20 + (index % 3) * 30}%`,
-              top: `${15 + Math.floor(index / 3) * 35}%`,
-            }}
-            animate={{ y: [0, -30, 0], rotate: [0, 10, -10, 0] }}
-            transition={{
-              duration: 6 + index,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            {icon}
-          </motion.div>
-        ))}
+     {floatingIcons.map((Icon, index) => (
+  <motion.div
+    key={index}
+    className="absolute opacity-40"
+    style={{
+      left: `${20 + (index % 4) * 45}%`,
+      top: `${15 + Math.floor(index / 4) * 35}%`,
+    }}
+    animate={{ y: [0, -30, 0] }}
+    transition={{
+      duration: 4 + index,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+  >
+    <Icon className="w-10 h-10 text-blue-400" />
+  </motion.div>
+))}
       </div>
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
@@ -111,7 +144,7 @@ const SkillsSection = () => {
         >
           {/* Heading */}
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">
-            My <span className="text-blue-500">Skills</span>
+            Tech <span className="text-blue-500">Stack</span>
           </h2>
 
           <p className="text-gray-600 dark:text-gray-400 text-center max-w-2xl mx-auto mb-16">

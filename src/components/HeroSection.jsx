@@ -65,12 +65,12 @@ const HeroSection = () => {
         {!isMobile ? (
           // 💻 Desktop → Ballpit
           <Ballpit
-            count={80}
-            colors={[0x3b82f6, 0x9333ea]}
+            count={100}
+  colors={[0x0f172a, 0x06b6d4, 0x475569]}
             gravity={0.01}
-            friction={0.98}
-            wallBounce={0.9}
-            followCursor={true}
+            friction={0.9875}
+            wallBounce={0.95}
+            followCursor={false}
           />
         ) : (
           // 📱 Mobile → FaultyTerminal
@@ -186,11 +186,7 @@ const HeroSection = () => {
             <motion.button
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() =>
-                document.getElementById("contact")?.scrollIntoView({
-                  behavior: "smooth",
-                })
-              }
+              onClick={() => window.open("../src/assets/Shivam_Gupta_Resume.pdf", "_blank")}
               className="
       px-8 py-4 rounded-xl
       border border-blue-500/30
@@ -204,7 +200,7 @@ const HeroSection = () => {
     "
             >
               <Download className="h-5 w-5" />
-              Let's Talk 💬
+              Resume 💬
             </motion.button>
           </div>
         </div>
