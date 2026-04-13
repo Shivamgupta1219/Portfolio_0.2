@@ -186,7 +186,7 @@ const HeroSection = () => {
             <motion.button
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => window.open("../src/assets/Shivam_Gupta_Resume.pdf", "_blank")}
+              onClick={() => window.open("/Shivam_Gupta_Resume.pdf", "_blank")}
               className="
       px-8 py-4 rounded-xl
       border border-blue-500/30
