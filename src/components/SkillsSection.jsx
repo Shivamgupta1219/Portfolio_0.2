@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
-import { useInView, motion } from "framer-motion";
-import { useRef } from "react";
+import { useInView, motion } from "framer-motion"; // eslint-disable-line no-unused-vars
+import { useRef, useState, useEffect } from "react";
 import {
   FaNodeJs,
   FaGithub,
@@ -55,35 +54,52 @@ const skillCategories = [
 const SkillBar = ({ name, level, color, delay }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
-  
-const techIconsMap = {
-  Frontend: [FaReact, FaJs, FaHtml5, FaCss3Alt, SiTailwindcss],
-  Backend: [FaNodeJs, SiMongodb, SiMysql],
-  "Tools & Others": [FaGithub, FaJava]
-};
+
   return (
-    <div ref={ref} className="mb-4">
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, x: -20 }}
+      animate={isInView ? { opacity: 1, x: 0 } : {}}
+      transition={{ duration: 0.6, delay }}
+      className="mb-6"
+    >
       <div className="flex justify-between mb-2">
-        <span className="text-sm font-medium text-gray-800 dark:text-gray-200">
+        <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">
           {name}
         </span>
-        <span className="text-sm font-mono text-gray-500 dark:text-gray-400">
-          {level}%
-        </span>
+        <motion.span
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ delay: delay + 0.5, duration: 0.6 }}
+          className="text-sm font-mono text-gray-500 dark:text-gray-400"
+        >
+          {isInView && <CountUpSkill value={level} />}%
+        </motion.span>
       </div>
 
-      <div className="h-2 rounded-full overflow-hidden bg-gray-200 dark:bg-white/10">
+      <div className="h-3 rounded-full overflow-hidden bg-gray-200 dark:bg-white/10 shadow-sm">
         <motion.div
           initial={{ width: 0 }}
           animate={isInView ? { width: `${level}%` } : {}}
-          transition={{ duration: 1, delay, ease: "easeOut" }}
-          className={`h-full rounded-full bg-gradient-to-r ${color}`}
+          transition={{ duration: 1.2, delay: delay + 0.2, ease: "easeOut" }}
+          className={`h-full rounded-full bg-gradient-to-r ${color} shadow-lg`}
         />
       </div>
-
-      
-    </div>
+    </motion.div>
   );
+};
+
+const CountUpSkill = ({ value }) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount((prev) => (prev < value ? prev + 1 : value));
+    }, 20);
+    return () => clearInterval(interval);
+  }, [value]);
+
+  return count;
 };
 
 const floatingIcons = [
@@ -107,32 +123,33 @@ const SkillsSection = () => {
   return (
     <section
       id="skills"
-      className="relative py-15 overflow-hidden bg-white dark:bg-black"
+      className="relative py-24 overflow-hidden bg-white dark:bg-black"
     >
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500/20 blur-3xl rounded-full"></div>
-        <div className="absolute bottom-20 right-20 w-72 h-72 bg-purple-500/20 blur-3xl rounded-full"></div>
+      <div className="absolute inset-0 -z-10 pointer-events-none">
+        <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500/10 blur-3xl rounded-full" />
+        <div className="absolute bottom-20 right-20 w-72 h-72 bg-purple-500/10 blur-3xl rounded-full" />
       </div>
-      {/* Floating Icons */}
-      <div className="absolute inset-0 pointer-events-none">
-     {floatingIcons.map((Icon, index) => (
-  <motion.div
-    key={index}
-    className="absolute opacity-40"
-    style={{
-      left: `${20 + (index % 4) * 45}%`,
-      top: `${15 + Math.floor(index / 4) * 35}%`,
-    }}
-    animate={{ y: [0, -30, 0] }}
-    transition={{
-      duration: 4 + index,
-      repeat: Infinity,
-      ease: "easeInOut",
-    }}
-  >
-    <Icon className="w-10 h-10 text-blue-400" />
-  </motion.div>
-))}
+
+      {/* Subtle floating tech icons - reduced opacity and count */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {floatingIcons.slice(0, 6).map((Icon, index) => (
+          <motion.div
+            key={index}
+            className="absolute opacity-[0.04] dark:opacity-[0.06]"
+            style={{
+              left: `${10 + (index % 3) * 35}%`,
+              top: `${15 + Math.floor(index / 3) * 50}%`,
+            }}
+            animate={{ y: [0, -30, 0], rotate: [0, 5, -5, 0] }}
+            transition={{
+              duration: 8 + index,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            <Icon className="w-24 h-24 text-blue-500" />
+          </motion.div>
+        ))}
       </div>
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
@@ -143,34 +160,57 @@ const SkillsSection = () => {
           transition={{ duration: 0.6 }}
         >
           {/* Heading */}
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">
-            Tech <span className="text-blue-500">Stack</span>
-          </h2>
+          <div className="text-center mb-16">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : {}}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/5 mb-4"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+              <span className="text-xs font-mono text-blue-500 tracking-widest uppercase">
+                Skills
+              </span>
+            </motion.div>
 
-          <p className="text-gray-600 dark:text-gray-400 text-center max-w-2xl mx-auto mb-16">
-            Technologies and tools I use to build modern applications
-          </p>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+              Technical{" "}
+              <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+                Expertise
+              </span>
+            </h2>
+
+            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              Technologies and tools I leverage to craft modern, scalable
+              applications
+            </p>
+          </div>
 
           {/* Skill Cards */}
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-6">
             {skillCategories.map((category, catIndex) => (
               <motion.div
                 key={category.title}
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: catIndex * 0.2 }}
+                transition={{ delay: catIndex * 0.15, duration: 0.6 }}
+                whileHover={{ y: -8 }}
                 className="
-relative group rounded-2xl p-6
-bg-white/60 dark:bg-white/5
-backdrop-blur-xl
-border border-white/20
-shadow-lg hover:shadow-2xl
-transition-all duration-500
-hover:-translate-y-2
-"
+                  relative group rounded-2xl p-7
+                  bg-white/60 dark:bg-white/[0.03]
+                  backdrop-blur-xl
+                  border border-gray-200 dark:border-white/10
+                  shadow-lg hover:shadow-2xl hover:shadow-blue-500/10
+                  hover:border-blue-500/30
+                  transition-all duration-500
+                "
               >
+                {/* Gradient accent on top */}
+                <div
+                  className={`absolute top-0 left-0 right-0 h-1 rounded-t-2xl bg-gradient-to-r ${category.color}`}
+                />
+
                 <h3
-                  className={`text-xl font-bold mb-6 bg-gradient-to-r ${category.color} bg-clip-text text-transparent`}
+                  className={`text-xl font-bold mb-6 bg-gradient-to-r ${category.color} bg-clip-text text-transparent tracking-tight`}
                 >
                   {category.title}
                 </h3>
@@ -181,7 +221,7 @@ hover:-translate-y-2
                     name={skill.name}
                     level={skill.level}
                     color={category.color}
-                    delay={catIndex * 0.2 + skillIndex * 0.1}
+                    delay={catIndex * 0.15 + skillIndex * 0.1}
                   />
                 ))}
               </motion.div>

@@ -1,7 +1,5 @@
-import { useInView } from "framer-motion";
+import { useInView, motion } from "framer-motion"; // eslint-disable-line no-unused-vars
 import { useRef, useState } from "react";
-// eslint-disable-next-line no-unused-vars
-import { motion } from "framer-motion";
 import emailjs from "emailjs-com";
 
 import { Send, Github, Linkedin, Mail, CheckCircle } from "lucide-react";
@@ -33,20 +31,54 @@ const ContactSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   });
 
-  const handleSubmit = (e) => {
+  const validateForm = () => {
+    if (!formData.name.trim()) {
+      setError("Name is required");
+      return false;
+    }
+    if (!formData.email.trim()) {
+      setError("Email is required");
+      return false;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError("Please enter a valid email");
+      return false;
+    }
+    if (!formData.message.trim()) {
+      setError("Message is required");
+      return false;
+    }
+    if (formData.message.trim().length < 10) {
+      setError("Message must be at least 10 characters");
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsLoading(true);
     const serviceId = import.meta.env.VITE_EMAIL_SERVICE_ID;
     const templateId = import.meta.env.VITE_EMAIL_TEMPLATE_ID;
     const publicKey = import.meta.env.VITE_EMAIL_PUBLIC_KEY;
 
-    emailjs
-      .send(
+    try {
+      await emailjs.send(
         serviceId,
         templateId,
         {
@@ -55,21 +87,24 @@ const ContactSection = () => {
           message: formData.message,
         },
         publicKey,
-      )
-      .then((res) => {
-        console.log("Email sent successfully", res);
-        setIsSubmitted(true);
-      })
-      .catch((error) => {
-        console.log("Error:", error);
-      });
+      );
+
+      setIsSubmitted(true);
+      setFormData({ name: "", email: "", message: "" });
+      setTimeout(() => setIsSubmitted(false), 5000);
+    } catch (error) {
+      console.error("Email error:", error);
+      setError("Failed to send message. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <section id="contact" className="py-15  bg-white dark:bg-black">
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500/20 blur-3xl rounded-full"></div>
-        <div className="absolute bottom-20 right-20 w-72 h-72 bg-purple-500/20 blur-3xl rounded-full"></div>
+    <section id="contact" className="py-24 bg-white dark:bg-black relative overflow-hidden">
+      <div className="absolute inset-0 -z-10 pointer-events-none">
+        <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500/10 blur-3xl rounded-full" />
+        <div className="absolute bottom-20 right-20 w-72 h-72 bg-purple-500/10 blur-3xl rounded-full" />
       </div>
       <div className="max-w-6xl mx-auto px-6">
         <motion.div
@@ -78,14 +113,31 @@ const ContactSection = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          {/* Heading */}
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">
-            Let's <span className="text-blue-500">Connect</span>
-          </h2>
+          {/* Heading - matched style */}
+          <div className="text-center mb-16">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : {}}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/5 mb-4"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+              <span className="text-xs font-mono text-blue-500 tracking-widest uppercase">
+                Contact
+              </span>
+            </motion.div>
 
-          <p className="text-gray-400 text-center max-w-2xl mx-auto mb-16">
-            Have a project in mind? Let's work together to bring it to life!
-          </p>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight text-gray-900 dark:text-white">
+              Let's Build Something{" "}
+              <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+                Together
+              </span>
+            </h2>
+
+            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              Have a project in mind or want to collaborate? I'd love to hear
+              from you. Drop a message and I'll get back within 24 hours.
+            </p>
+          </div>
 
           <div className="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
             {/* Form */}
@@ -111,19 +163,30 @@ const ContactSection = () => {
                   </motion.div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
+                    {error && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="p-3 bg-red-500/20 border border-red-500/50 text-red-400 rounded-lg text-sm"
+                      >
+                        {error}
+                      </motion.div>
+                    )}
+
                     <div>
                       <label className="text-sm font-medium">Name</label>
                       <input
                         type="text"
                         placeholder="Your name"
                         value={formData.name}
-                        onChange={(e) =>
+                        onChange={(e) => {
                           setFormData({
                             ...formData,
                             name: e.target.value,
-                          })
-                        }
-                        required
+                          });
+                          setError("");
+                        }}
+                        maxLength="100"
                         className="
 w-full mt-2 px-4 py-3 rounded-xl
 bg-white/50 dark:bg-white/5
@@ -142,13 +205,14 @@ placeholder:text-gray-400
                         type="email"
                         placeholder="your@email.com"
                         value={formData.email}
-                        onChange={(e) =>
+                        onChange={(e) => {
                           setFormData({
                             ...formData,
                             email: e.target.value,
-                          })
-                        }
-                        required
+                          });
+                          setError("");
+                        }}
+                        maxLength="255"
                         className="
 w-full mt-2 px-4 py-3 rounded-xl
 bg-white/50 dark:bg-white/5
@@ -167,13 +231,14 @@ placeholder:text-gray-400
                         rows="5"
                         placeholder="Tell me about your project..."
                         value={formData.message}
-                        onChange={(e) =>
+                        onChange={(e) => {
                           setFormData({
                             ...formData,
                             message: e.target.value,
-                          })
-                        }
-                        required
+                          });
+                          setError("");
+                        }}
+                        maxLength="1000"
                         className="
 w-full mt-2 px-4 py-3 rounded-xl
 bg-white/50 dark:bg-white/5
@@ -184,22 +249,41 @@ outline-none transition-all duration-300
 placeholder:text-gray-400
 "
                       />
+                      <p className="text-xs text-gray-500 mt-1">
+                        {formData.message.length}/1000
+                      </p>
                     </div>
 
-                    <button
+                    <motion.button
                       type="submit"
+                      disabled={isLoading}
+                      whileHover={{ scale: isLoading ? 1 : 1.02 }}
+                      whileTap={{ scale: isLoading ? 1 : 0.98 }}
                       className="
   w-full flex items-center justify-center gap-2 py-3 rounded-xl
   bg-gradient-to-r from-blue-500 to-purple-500
   text-white font-semibold
   shadow-lg hover:shadow-xl
-  hover:scale-[1.02]
   transition-all duration-300
+  disabled:opacity-60 disabled:cursor-not-allowed
   "
                     >
-                      <Send className="h-5 w-5" />
-                      Send Message
-                    </button>
+                      {isLoading ? (
+                        <>
+                          <motion.div
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 1, repeat: Infinity }}
+                            className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full"
+                          />
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          <Send className="h-5 w-5" />
+                          Send Message
+                        </>
+                      )}
+                    </motion.button>
                   </form>
                 )}
               </div>

@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import { useInView, motion, useMotionValue, useTransform } from "framer-motion";
+import { useInView, motion } from "framer-motion"; // eslint-disable-line no-unused-vars
 import { useRef, useState, useEffect } from "react";
 import {
   BookOpen,
@@ -318,15 +317,24 @@ const AboutSection = () => {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             className="text-center mb-16"
           >
-            <h2
-              className="text-5xl md:text-7xl font-black mb-4 bg-gradient-to-r from-gray-900 via-blue-800 to-purple-900 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent"
-              style={{
-                fontFamily: "'Playfair Display', 'Crimson Text', serif",
-              }}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : {}}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/5 mb-4"
             >
-              About Me
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+              <span className="text-xs font-mono text-blue-500 tracking-widest uppercase">
+                About
+              </span>
+            </motion.div>
+
+            <h2 className="text-5xl md:text-6xl font-bold mb-4 tracking-tight text-gray-900 dark:text-white">
+              About{" "}
+              <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+                Me
+              </span>
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto font-light">
+            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
               A passionate developer crafting digital experiences with code and
               creativity
             </p>
@@ -427,16 +435,16 @@ const AboutSection = () => {
 
                   {/* CTA */}
                   <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white py-4 rounded-xl font-bold shadow-xl hover:shadow-2xl transition-all"
+                    whileHover={{ scale: 1.03, y: -2 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="w-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white py-4 rounded-xl font-semibold shadow-xl shadow-blue-500/25 hover:shadow-blue-500/40 transition-all"
                     onClick={() => {
-                      document.getElementById("contact").scrollIntoView({
+                      document.getElementById("contact")?.scrollIntoView({
                         behavior: "smooth",
                       });
                     }}
                   >
-                    Let's Build Something Amazing 🚀
+                    Let's Collaborate
                   </motion.button>
                 </div>
               </div>
