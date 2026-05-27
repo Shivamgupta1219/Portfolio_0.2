@@ -5,9 +5,9 @@ import { motion } from "framer-motion"; // eslint-disable-line no-unused-vars
 import betterparker from "../assets/better_parker.png";      
 import campusCvImg from "../assets/CampusCV.png";
 const categories = [
-  "All",
-  "Frontend",
-  "Backend",
+  // "All",
+  // "Frontend",
+  // "Backend",
   "Full Stack",
   "Data Analysis",
   "Freelance",
@@ -19,7 +19,7 @@ const projects = [
     description:
       "A premium Dubai real estate website built as a freelance project. Designed with a cinematic aesthetic, smooth animations, and an integrated AI assistant (Jini) to help users find properties.",
     category: "Freelance",
-    tech: ["MERN STACK", "Vercel"],
+    tech: ["MERN stack", "Vercel"],
     image: betterparker,
     github: "#",
     demo: "https://better-paker.vercel.app/",
