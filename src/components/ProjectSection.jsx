@@ -5,7 +5,7 @@ import { motion } from "framer-motion"; // eslint-disable-line no-unused-vars
 import betterparker from "../assets/better_parker.png";      
 import campusCvImg from "../assets/CampusCV.png";
 const categories = [
-  // "All",
+  "All",
   // "Frontend",
   // "Backend",
   "Full Stack",
