@@ -20,12 +20,13 @@ export default function ExperienceSection() {
       ],
       tech: [
         "Angular.js",
-        "Node.js",
-        "Express",
-        "MongoDB",
+        "Spring Boot",
+        "Java",
+        "PostgreSQL",
         "Tailwind CSS",
         "REST APIs",
         "Git",
+        
       ],
     },
     {

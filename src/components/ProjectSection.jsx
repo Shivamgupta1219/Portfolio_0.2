@@ -50,17 +50,17 @@ const projects = [
       "https://github.com/Shivamgupta1219/Customer-Behavior-Dashboard-Data-Analysis-",
     demo: "#",
   },
-  {
-    id: 5,
-    title: "Task Management App",
-    description:
-      "Kanban-style project management with real-time collaboration features.",
-    category: "Frontend",
-    tech: ["React", "Tailwind", "Firebase"],
-    image: "📋",
-    github: "#",
-    demo: "#",
-  },
+  // {
+  //   id: 5,
+  //   title: "Task Management App",
+  //   description:
+  //     "Kanban-style project management with real-time collaboration features.",
+  //   category: "Frontend",
+  //   tech: ["React", "Tailwind", "Firebase"],
+  //   image: "📋",
+  //   github: "#",
+  //   demo: "#",
+  // },
 ];
 const ProjectSection = () => {
   const [activeFilter, setActiveFilter] = useState("All");
