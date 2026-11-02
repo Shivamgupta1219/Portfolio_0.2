@@ -214,13 +214,14 @@ void main() {
       uniforms.mousePosition.value = [mousePositionRef.current.x, mousePositionRef.current.y];
 
       renderer.render({ scene: mesh });
-      requestAnimationFrame(render);
+      rafId = requestAnimationFrame(render);
     };
 
-    requestAnimationFrame(render);
+    let rafId = requestAnimationFrame(render);
 
     const container = containerRef.current;
     return () => {
+      cancelAnimationFrame(rafId);
       window.removeEventListener('resize', resize);
       if (mouseInteraction && container) {
         container.removeEventListener('mousemove', handleMouseMove);

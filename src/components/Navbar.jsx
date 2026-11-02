@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion"; // eslint-disable-line no-unused-vars
 import { Menu, X } from "lucide-react";
 
+// Same order as the sections on the page
 const navItems = [
   { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
+  { name: "Experience", href: "#experience" },
   { name: "Work", href: "#projects" },
   { name: "Skills", href: "#skills" },
+  { name: "About", href: "#about" },
   { name: "Contact", href: "#contact" },
 ];
 
@@ -19,7 +21,7 @@ const Navbar = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
 
-      const sections = ["home", "about", "projects", "skills", "contact"];
+      const sections = navItems.map((item) => item.href.replace("#", ""));
       const current = sections.find((section) => {
         const element = document.getElementById(section);
         if (element) {

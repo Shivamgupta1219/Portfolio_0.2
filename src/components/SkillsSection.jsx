@@ -95,12 +95,12 @@ const SkillBar = ({ name, level, color, delay }) => {
 const CountUpSkill = ({ value }) => {
   const [count, setCount] = useState(0);
 
+  // Step once per tick and stop when the target is reached
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCount((prev) => (prev < value ? prev + 1 : value));
-    }, 20);
-    return () => clearInterval(interval);
-  }, [value]);
+    if (count >= value) return;
+    const timeout = setTimeout(() => setCount((prev) => prev + 1), 20);
+    return () => clearTimeout(timeout);
+  }, [count, value]);
 
   return count;
 };
@@ -126,7 +126,7 @@ const SkillsSection = () => {
   return (
     <section
       id="skills"
-      className="relative py-24 overflow-hidden bg-white dark:bg-black"
+      className="relative isolate py-24 overflow-hidden bg-white dark:bg-black"
     >
       <div className="absolute inset-0 -z-10 pointer-events-none">
         <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500/10 blur-3xl rounded-full" />

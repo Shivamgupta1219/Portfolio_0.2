@@ -42,7 +42,8 @@ const HeroSection = () => {
 
     return () => clearTimeout(timeout);
   }, [displayText, isDeleting, roleIndex]);
-  const [isMobile, setIsMobile] = useState(false);
+  // Read the width up front so phones never mount the desktop Ballpit
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
 
   useEffect(() => {
     const checkScreen = () => {

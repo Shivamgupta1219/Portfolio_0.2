@@ -10,23 +10,8 @@ import Footer from "../components/Footer";
 import ExperienceSection from "../components/ExperienceSection";
 
 const Index = () => {
-  const [isDark] = useState(
-    () => localStorage.getItem("theme") === "dark",
-  );
-
+  // The site is dark-only: index.html sets class="dark" on <html>
   const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [isDark]);
-
-  useEffect(() => {
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-  }, [isDark]);
 
   useEffect(() => {
     const timer = setTimeout(() => {

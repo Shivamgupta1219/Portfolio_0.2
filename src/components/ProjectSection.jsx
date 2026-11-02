@@ -4,6 +4,7 @@ import { ExternalLink, Github } from "lucide-react";
 import { motion } from "framer-motion"; // eslint-disable-line no-unused-vars
 import betterparker from "../assets/better_parker.png";      
 import campusCvImg from "../assets/CampusCV.png";
+import relproImg from "../assets/relpro_group.jpg";
 const categories = [
   "All",
   // "Frontend",
@@ -13,6 +14,18 @@ const categories = [
   "Freelance",
 ];
 const projects = [
+  {
+    id: 5,
+    title: "Relpro Group — Builders & Developers",
+    description:
+      "A multi-page website for a Meerut-based real estate developer, showcasing plotted colonies, residences and commercial parks across Delhi-NCR, with project and location pages, a gallery, and an enquiry form with WhatsApp contact.",
+    category: "Freelance",
+    tech: ["React", "Vite", "Tailwind CSS", "Framer Motion"],
+    image: relproImg,
+    github: "#",
+    demo: "https://www.relprogroup.co.in/",
+    isFreelance: true,
+  },
   {
     id: 1,
     title: "Better Parker — Realty is Reality",
@@ -73,7 +86,7 @@ const ProjectSection = () => {
       : projects.filter((p) => p.category === activeFilter);
 
   return (
-    <section id="projects" className="py-24 bg-white dark:bg-black relative overflow-hidden">
+    <section id="projects" className="py-24 bg-white dark:bg-black relative isolate overflow-hidden">
       {/* Subtle background accent */}
       <div className="absolute inset-0 -z-10 pointer-events-none">
         <div className="absolute top-40 right-20 w-72 h-72 bg-purple-500/10 blur-3xl rounded-full" />

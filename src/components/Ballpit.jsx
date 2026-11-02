@@ -56,6 +56,8 @@ class x {
   #c = new e();
   #h = { elapsed: 0, delta: 0 };
   #l;
+  #onResize;
+  #onVisibility;
   constructor(e) {
     this.#e = { ...e };
     this.#m();
@@ -89,10 +91,13 @@ class x {
     this.renderer.outputColorSpace = n;
   }
   #g() {
+    // Keep the bound handlers so #y can remove the same function references
+    this.#onResize = this.#f.bind(this);
+    this.#onVisibility = this.#v.bind(this);
     if (!(this.#e.size instanceof Object)) {
-      window.addEventListener("resize", this.#f.bind(this));
+      window.addEventListener("resize", this.#onResize);
       if (this.#e.size === "parent" && this.canvas.parentNode) {
-        this.#r = new ResizeObserver(this.#f.bind(this));
+        this.#r = new ResizeObserver(this.#onResize);
         this.#r.observe(this.canvas.parentNode);
       }
     }
@@ -102,13 +107,13 @@ class x {
       threshold: 0,
     });
     this.#o.observe(this.canvas);
-    document.addEventListener("visibilitychange", this.#v.bind(this));
+    document.addEventListener("visibilitychange", this.#onVisibility);
   }
   #y() {
-    window.removeEventListener("resize", this.#f.bind(this));
+    window.removeEventListener("resize", this.#onResize);
     this.#r?.disconnect();
     this.#o?.disconnect();
-    document.removeEventListener("visibilitychange", this.#v.bind(this));
+    document.removeEventListener("visibilitychange", this.#onVisibility);
   }
   #u(e) {
     this.#s = e[0].isIntersecting;
@@ -271,16 +276,16 @@ function S(e) {
         document.body.addEventListener("click", C);
 
         document.body.addEventListener("touchstart", TouchStart, {
-          passive: false,
+          passive: true,
         });
         document.body.addEventListener("touchmove", TouchMove, {
-          passive: false,
+          passive: true,
         });
         document.body.addEventListener("touchend", TouchEnd, {
-          passive: false,
+          passive: true,
         });
         document.body.addEventListener("touchcancel", TouchEnd, {
-          passive: false,
+          passive: true,
         });
 
         R = true;
@@ -350,7 +355,6 @@ function L() {
 
 function TouchStart(e) {
   if (e.touches.length > 0) {
-    e.preventDefault();
     A.x = e.touches[0].clientX;
     A.y = e.touches[0].clientY;
 
@@ -371,7 +375,6 @@ function TouchStart(e) {
 
 function TouchMove(e) {
   if (e.touches.length > 0) {
-    e.preventDefault();
     A.x = e.touches[0].clientX;
     A.y = e.touches[0].clientY;
 
@@ -705,7 +708,7 @@ function createBallpit(e, t = {}) {
   const r = new a();
   let c = false;
 
-  e.style.touchAction = "none";
+  e.style.touchAction = "pan-y";
   e.style.userSelect = "none";
   e.style.webkitUserSelect = "none";
 

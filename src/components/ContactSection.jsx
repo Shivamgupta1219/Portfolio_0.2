@@ -101,7 +101,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="py-24 bg-white dark:bg-black relative overflow-hidden">
+    <section id="contact" className="py-24 bg-white dark:bg-black relative isolate overflow-hidden">
       <div className="absolute inset-0 -z-10 pointer-events-none">
         <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500/10 blur-3xl rounded-full" />
         <div className="absolute bottom-20 right-20 w-72 h-72 bg-purple-500/10 blur-3xl rounded-full" />

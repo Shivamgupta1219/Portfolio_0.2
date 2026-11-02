@@ -270,11 +270,15 @@ const FunFactCard = ({ fact, index, isInView }) => {
 const AboutSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const glowRef = useRef(null);
 
+  // Update the glow directly on the DOM node so mouse moves don't re-render the section
   useEffect(() => {
     const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      const glow = glowRef.current;
+      if (!glow) return;
+      const rect = glow.getBoundingClientRect();
+      glow.style.backgroundImage = `radial-gradient(circle at ${e.clientX - rect.left}px ${e.clientY - rect.top}px, rgba(59, 130, 246, 0.3), transparent 50%)`;
     };
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
@@ -283,7 +287,7 @@ const AboutSection = () => {
   return (
     <section
       id="about"
-      className="relative py-15 overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white dark:from-black dark:via-gray-950 dark:to-black"
+      className="relative isolate py-15 overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white dark:from-black dark:via-gray-950 dark:to-black"
     >
       {/* Animated background */}
 
@@ -297,11 +301,9 @@ const AboutSection = () => {
 
       {/* Subtle grid */}
       <div
+        ref={glowRef}
         className="absolute inset-0 -z-10 opacity-5"
-        style={{
-          backgroundImage: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(59, 130, 246, 0.3), transparent 50%)`,
-          backgroundSize: "100% 100%",
-        }}
+        style={{ backgroundSize: "100% 100%" }}
       ></div>
 
       <div className="max-w-7xl mx-auto px-6">

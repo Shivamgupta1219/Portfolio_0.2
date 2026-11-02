@@ -48,7 +48,7 @@ export default function ExperienceSection() {
   return (
     <section
       id="experience"
-      className="py-24 bg-white text-black dark:bg-black dark:text-white relative overflow-hidden"
+      className="py-24 bg-white text-black dark:bg-black dark:text-white relative isolate overflow-hidden"
     >
       {/* Background Glow - more subtle */}
       <div className="absolute inset-0 -z-10 pointer-events-none">
