@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import CountUp from "./CountUp";
 import profileImg from "../assets/ShivamGupta_img.jpeg";
+import SectionHeading from "./SectionHeading";
 const timeline = [
   {
     icon: GraduationCap,
@@ -136,7 +137,7 @@ const TimelineItem = ({ item, index, isInView }) => {
 
         {/* Content */}
         <div className="flex-1">
-          <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-gray-800 group-hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300">
+          <div className="bg-card rounded-2xl p-6 shadow-xl border border-border group-hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300">
             <div className="flex justify-between items-start mb-3">
               <h4
                 className={`text-xl font-bold bg-gradient-to-r ${item.color} bg-clip-text text-transparent`}
@@ -193,7 +194,7 @@ const ValueCard = ({ value, index, isInView }) => {
       onMouseLeave={() => setIsHovered(false)}
       className="relative group"
     >
-      <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-800 hover:shadow-2xl transition-all duration-300 h-full">
+      <div className="bg-card rounded-2xl p-6 shadow-lg border border-border hover:shadow-2xl transition-all duration-300 h-full">
         {/* Glow effect */}
         <motion.div
           className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${value.color} opacity-0 group-hover:opacity-10 transition-opacity blur-xl`}
@@ -240,7 +241,7 @@ const FunFactCard = ({ fact, index, isInView }) => {
       >
         {/* Front */}
         <div className="absolute inset-0 backface-hidden">
-          <div className="bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl p-6 h-full flex flex-col items-center justify-center shadow-xl text-white">
+          <div className="bg-gradient-to-br from-indigo-500 via-violet-500 to-fuchsia-500 rounded-2xl p-6 h-full flex flex-col items-center justify-center shadow-xl text-white">
             <fact.icon className="h-12 w-12 mb-3" />
             <h4 className="text-lg font-bold text-center">{fact.title}</h4>
             <p className="text-xs opacity-80 mt-2">Click to reveal</p>
@@ -252,7 +253,7 @@ const FunFactCard = ({ fact, index, isInView }) => {
           className="absolute inset-0 backface-hidden"
           style={{ transform: "rotateY(180deg)" }}
         >
-          <div className="bg-white dark:bg-gray-900 border-2 border-purple-500 rounded-2xl p-6 h-full flex flex-col justify-center shadow-xl">
+          <div className="bg-card border-2 border-purple-500 rounded-2xl p-6 h-full flex flex-col justify-center shadow-xl">
             <p className="text-sm text-gray-700 dark:text-gray-300 text-center mb-3 italic">
               "{fact.fact}"
             </p>
@@ -287,7 +288,7 @@ const AboutSection = () => {
   return (
     <section
       id="about"
-      className="relative isolate py-15 overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white dark:from-black dark:via-gray-950 dark:to-black"
+      className="relative isolate py-15 overflow-hidden bg-gradient-to-b from-background via-muted/40 to-background"
     >
       {/* Animated background */}
 
@@ -313,34 +314,12 @@ const AboutSection = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          {/* Heading */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            className="text-center mb-16"
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/5 mb-4"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-              <span className="text-xs font-mono text-blue-500 tracking-widest uppercase">
-                About
-              </span>
-            </motion.div>
-
-            <h2 className="text-5xl md:text-6xl font-bold mb-4 tracking-tight text-gray-900 dark:text-white">
-              About{" "}
-              <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-                Me
-              </span>
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              A passionate developer crafting digital experiences with code and
-              creativity
-            </p>
-          </motion.div>
+          <SectionHeading
+            badge="About"
+            title="About"
+            accent="Me"
+            description="A passionate developer crafting digital experiences with code and creativity"
+          />
 
           {/* Main Content Grid */}
           <div className="grid lg:grid-cols-5 gap-8 mb-20">
@@ -352,7 +331,7 @@ const AboutSection = () => {
               className="lg:col-span-2"
             >
               <div className="sticky top-24">
-                <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 rounded-3xl p-8 shadow-2xl border border-gray-100 dark:border-gray-700 hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] transition-shadow duration-500">
+                <div className="bg-gradient-to-br from-card to-muted/60 rounded-3xl p-8 shadow-2xl border border-border hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] transition-shadow duration-500">
                   {/* Profile Image */}
                   <div className="relative mb-6">
                     <motion.div
@@ -362,7 +341,7 @@ const AboutSection = () => {
                     >
                       {/* Animated ring */}
                       <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full"
+                        className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500 rounded-full"
                         animate={{ rotate: 360 }}
                         transition={{
                           duration: 20,
@@ -371,7 +350,7 @@ const AboutSection = () => {
                         }}
                         style={{ padding: "4px" }}
                       >
-                        <div className="w-full h-full rounded-full bg-white dark:bg-gray-900"></div>
+                        <div className="w-full h-full rounded-full bg-card"></div>
                       </motion.div>
 
                       {/* Profile picture */}
@@ -397,7 +376,7 @@ const AboutSection = () => {
                     <h3 className="text-3xl font-bold mb-2 text-gray-900 dark:text-white">
                       Shivam Gupta
                     </h3>
-                    <div className="inline-block bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg mb-3">
+                    <div className="inline-block bg-gradient-to-r from-indigo-500 to-violet-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg mb-3">
                       Full Stack Developer
                     </div>
                     <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm">
@@ -415,7 +394,7 @@ const AboutSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={isInView ? { opacity: 1, y: 0 } : {}}
                         transition={{ delay: 0.3 + i * 0.1 }}
-                        className="bg-white dark:bg-gray-800 rounded-xl p-4 text-center shadow-md border border-gray-100 dark:border-gray-700"
+                        className="bg-background/60 rounded-xl p-4 text-center shadow-md border border-border"
                       >
                         <div className="text-2xl mb-1">{stat.icon}</div>
                  <div className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -439,7 +418,7 @@ const AboutSection = () => {
                   <motion.button
                     whileHover={{ scale: 1.03, y: -2 }}
                     whileTap={{ scale: 0.97 }}
-                    className="w-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white py-4 rounded-xl font-semibold shadow-xl shadow-blue-500/25 hover:shadow-blue-500/40 transition-all"
+                    className="w-full bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500 text-white py-4 rounded-xl font-semibold shadow-xl shadow-blue-500/25 hover:shadow-blue-500/40 transition-all"
                     onClick={() => {
                       document.getElementById("contact")?.scrollIntoView({
                         behavior: "smooth",
@@ -542,7 +521,7 @@ const AboutSection = () => {
             >
               "Code is not just about making things work—
               <br />
-              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent font-bold">
+              <span className="bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-600 bg-clip-text text-transparent font-bold">
                 it's about crafting experiences
               </span>
               <br />

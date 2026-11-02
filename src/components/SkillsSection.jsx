@@ -16,6 +16,8 @@ import {
   SiTailwindcss,
   SiMysql
 } from "react-icons/si";
+import SectionHeading from "./SectionHeading";
+import SpotlightCard from "./SpotlightCard";
 
 const skillCategories = [
   {
@@ -126,7 +128,7 @@ const SkillsSection = () => {
   return (
     <section
       id="skills"
-      className="relative isolate py-24 overflow-hidden bg-white dark:bg-black"
+      className="relative isolate py-24 overflow-hidden bg-background"
     >
       <div className="absolute inset-0 -z-10 pointer-events-none">
         <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500/10 blur-3xl rounded-full" />
@@ -162,31 +164,12 @@ const SkillsSection = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          {/* Heading */}
-          <div className="text-center mb-16">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/5 mb-4"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-              <span className="text-xs font-mono text-blue-500 tracking-widest uppercase">
-                Skills
-              </span>
-            </motion.div>
-
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
-              Technical{" "}
-              <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-                Expertise
-              </span>
-            </h2>
-
-            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              Technologies and tools I leverage to craft modern, scalable
-              applications
-            </p>
-          </div>
+          <SectionHeading
+            badge="Skills"
+            title="Technical"
+            accent="Expertise"
+            description="Technologies and tools I leverage to craft modern, scalable applications"
+          />
 
           {/* Skill Cards */}
           <div className="grid md:grid-cols-3 gap-6">
@@ -197,16 +180,9 @@ const SkillsSection = () => {
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: catIndex * 0.15, duration: 0.6 }}
                 whileHover={{ y: -8 }}
-                className="
-                  relative group rounded-2xl p-7
-                  bg-white/60 dark:bg-white/[0.03]
-                  backdrop-blur-xl
-                  border border-gray-200 dark:border-white/10
-                  shadow-lg hover:shadow-2xl hover:shadow-blue-500/10
-                  hover:border-blue-500/30
-                  transition-all duration-500
-                "
+                className="relative group h-full"
               >
+                <SpotlightCard spotlightColor="#6366f1" className="p-7 rounded-2xl h-full">
                 {/* Gradient accent on top */}
                 <div
                   className={`absolute top-0 left-0 right-0 h-1 rounded-t-2xl bg-gradient-to-r ${category.color}`}
@@ -227,6 +203,7 @@ const SkillsSection = () => {
                     delay={catIndex * 0.15 + skillIndex * 0.1}
                   />
                 ))}
+                </SpotlightCard>
               </motion.div>
             ))}
           </div>

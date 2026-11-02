@@ -8,9 +8,10 @@ import SkillsSection from "../components/SkillsSection";
 import ContactSection from "../components/ContactSection";
 import Footer from "../components/Footer";
 import ExperienceSection from "../components/ExperienceSection";
+import ClickSpark from "../components/ClickSpark";
+import { BRAND_COLORS } from "../context/theme";
 
 const Index = () => {
-  // The site is dark-only: index.html sets class="dark" on <html>
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -30,12 +31,12 @@ const Index = () => {
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.6, ease: "easeInOut" }}
-            className="fixed inset-0 z-[200] bg-black flex items-center justify-center overflow-hidden"
+            className="fixed inset-0 z-[200] bg-background flex items-center justify-center overflow-hidden"
           >
             {/* Subtle background gradient */}
             <div className="absolute inset-0">
               <motion.div
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 blur-3xl"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-indigo-500/20 via-violet-500/20 to-fuchsia-500/20 blur-3xl"
                 animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.8, 0.4] }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
@@ -83,7 +84,7 @@ const Index = () => {
                   />
                   {/* Center text */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent font-mono">
+                    <span className="text-2xl font-bold bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent font-mono">
                       SG
                     </span>
                   </div>
@@ -95,7 +96,7 @@ const Index = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
-                className="text-xl font-semibold text-white tracking-wider"
+                className="text-xl font-semibold text-foreground tracking-wider"
               >
                 Shivam Gupta
               </motion.h2>
@@ -104,7 +105,7 @@ const Index = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6, duration: 0.5 }}
-                className="text-sm text-gray-400 font-mono mt-2 tracking-widest uppercase"
+                className="text-sm text-muted-foreground font-mono mt-2 tracking-widest uppercase"
               >
                 Loading Portfolio
               </motion.p>
@@ -132,22 +133,32 @@ const Index = () => {
         )}
       </AnimatePresence>
 
-      {/* Main Layout */}
-      <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white overflow-x-hidden">
-        <Navbar />
+      {/* Main Layout - mounted as the loader fades so entrance animations are seen */}
+      {!isLoading && (
+        <ClickSpark
+          sparkColor={BRAND_COLORS}
+          sparkSize={10}
+          sparkRadius={22}
+          sparkCount={10}
+          duration={450}
+        >
+          <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+            <Navbar />
 
-        <main>
-          <HeroSection />
-          <ExperienceSection />
-          <ProjectSection />
-          <SkillsSection />
-          <AboutSection />
+            <main>
+              <HeroSection />
+              <ExperienceSection />
+              <ProjectSection />
+              <SkillsSection />
+              <AboutSection />
 
-          <ContactSection />
-        </main>
+              <ContactSection />
+            </main>
 
-        <Footer />
-      </div>
+            <Footer />
+          </div>
+        </ClickSpark>
+      )}
     </>
   );
 };

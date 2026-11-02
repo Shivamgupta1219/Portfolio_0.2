@@ -1,6 +1,8 @@
 import { useInView, motion } from "framer-motion"; // eslint-disable-line no-unused-vars
 import { useRef, useState } from "react";
 import emailjs from "emailjs-com";
+import SectionHeading from "./SectionHeading";
+import SpotlightCard from "./SpotlightCard";
 
 import { Send, Github, Linkedin, Mail, CheckCircle } from "lucide-react";
 
@@ -101,7 +103,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="py-24 bg-white dark:bg-black relative isolate overflow-hidden">
+    <section id="contact" className="py-24 bg-background relative isolate overflow-hidden">
       <div className="absolute inset-0 -z-10 pointer-events-none">
         <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500/10 blur-3xl rounded-full" />
         <div className="absolute bottom-20 right-20 w-72 h-72 bg-purple-500/10 blur-3xl rounded-full" />
@@ -113,31 +115,12 @@ const ContactSection = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          {/* Heading - matched style */}
-          <div className="text-center mb-16">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/5 mb-4"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-              <span className="text-xs font-mono text-blue-500 tracking-widest uppercase">
-                Contact
-              </span>
-            </motion.div>
-
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight text-gray-900 dark:text-white">
-              Let's Build Something{" "}
-              <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-                Together
-              </span>
-            </h2>
-
-            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              Have a project in mind or want to collaborate? I'd love to hear
-              from you. Drop a message and I'll get back within 24 hours.
-            </p>
-          </div>
+          <SectionHeading
+            badge="Contact"
+            title="Let's Build Something"
+            accent="Together"
+            description="Have a project in mind or want to collaborate? I'd love to hear from you. Drop a message and I'll get back within 24 hours."
+          />
 
           <div className="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
             {/* Form */}
@@ -146,7 +129,7 @@ const ContactSection = () => {
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: 0.2 }}
             >
-              <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8">
+              <SpotlightCard spotlightColor="#a855f7" className="rounded-2xl">
                 {isSubmitted ? (
                   <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
@@ -157,7 +140,7 @@ const ContactSection = () => {
                     <h3 className="text-2xl font-bold mb-2">
                       Message Sent! 🎉
                     </h3>
-                    <p className="text-gray-400 text-center">
+                    <p className="text-muted-foreground text-center">
                       Thanks for reaching out! I'll get back to you soon.
                     </p>
                   </motion.div>
@@ -189,8 +172,8 @@ const ContactSection = () => {
                         maxLength="100"
                         className="
 w-full mt-2 px-4 py-3 rounded-xl
-bg-white/50 dark:bg-white/5
-border border-white/20
+bg-background/60
+border border-border
 backdrop-blur-md
 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30
 outline-none transition-all duration-300
@@ -215,8 +198,8 @@ placeholder:text-gray-400
                         maxLength="255"
                         className="
 w-full mt-2 px-4 py-3 rounded-xl
-bg-white/50 dark:bg-white/5
-border border-white/20
+bg-background/60
+border border-border
 backdrop-blur-md
 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30
 outline-none transition-all duration-300
@@ -241,8 +224,8 @@ placeholder:text-gray-400
                         maxLength="1000"
                         className="
 w-full mt-2 px-4 py-3 rounded-xl
-bg-white/50 dark:bg-white/5
-border border-white/20
+bg-background/60
+border border-border
 backdrop-blur-md
 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30
 outline-none transition-all duration-300
@@ -261,7 +244,7 @@ placeholder:text-gray-400
                       whileTap={{ scale: isLoading ? 1 : 0.98 }}
                       className="
   w-full flex items-center justify-center gap-2 py-3 rounded-xl
-  bg-gradient-to-r from-blue-500 to-purple-500
+  bg-gradient-to-r from-indigo-500 to-violet-500
   text-white font-semibold
   shadow-lg hover:shadow-xl
   transition-all duration-300
@@ -286,7 +269,7 @@ placeholder:text-gray-400
                     </motion.button>
                   </form>
                 )}
-              </div>
+              </SpotlightCard>
             </motion.div>
 
             {/* Info */}
@@ -296,9 +279,9 @@ placeholder:text-gray-400
               transition={{ delay: 0.4 }}
               className="flex flex-col justify-center"
             >
-              <h3 className="text-2xl font-bold mb-4">Let's Connect!</h3>
+              <h3 className="text-2xl font-bold mb-4 text-foreground">Let's Connect!</h3>
 
-              <p className="text-gray-400 mb-8">
+              <p className="text-muted-foreground mb-8">
                 I'm always open to discussing new projects, creative ideas, or
                 opportunities. Feel free to connect with me.
               </p>
@@ -316,11 +299,11 @@ placeholder:text-gray-400
                     whileHover={{ scale: 1.1, y: -4 }}
                     className="
 w-12 h-12 rounded-xl
-bg-white/50 dark:bg-white/5
+bg-background/60
 backdrop-blur-md
-border border-white/20
+border border-border
 flex items-center justify-center
-text-gray-500
+text-muted-foreground
 hover:text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500
 transition-all duration-300
 "
@@ -331,7 +314,7 @@ transition-all duration-300
               </div>
 
               {/* Email */}
-              <div className="bg-white/5 rounded-xl p-4 inline-flex items-center gap-3">
+              <div className="bg-card border border-border rounded-xl p-4 inline-flex items-center gap-3 shadow-sm">
                 <Mail className="h-5 w-5 text-blue-500" />
                 <span className="font-mono text-sm">
                   sgshivamgupta206@gmail.com

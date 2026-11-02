@@ -3,7 +3,7 @@ import { Heart, Code } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="py-8 border-t border-gray-200 dark:border-white/10 bg-white dark:bg-black">
+    <footer className="py-8 border-t border-border bg-background">
       <div className="max-w-6xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 10 }}

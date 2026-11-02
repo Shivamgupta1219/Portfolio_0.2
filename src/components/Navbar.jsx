@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion"; // eslint-disable-line no-unused-vars
 import { Menu, X } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
+import Magnet from "./Magnet";
 
 // Same order as the sections on the page
 const navItems = [
@@ -43,7 +45,7 @@ const Navbar = () => {
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? "py-3 bg-white/80 dark:bg-black/70 backdrop-blur-xl border-b border-gray-200/50 dark:border-white/5"
+          ? "py-3 bg-background/70 backdrop-blur-xl border-b border-border shadow-[0_8px_30px_-12px_rgba(0,0,0,0.12)]"
           : "py-5 bg-transparent"
       }`}
     >
@@ -54,8 +56,10 @@ const Navbar = () => {
           whileHover={{ scale: 1.05 }}
           className="flex items-center gap-2 group"
         >
-          <div className="relative w-9 h-9 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/25 group-hover:shadow-blue-500/40 transition-shadow">
-            <span className="text-white font-bold text-sm tracking-tight">SG</span>
+          <div className="relative w-9 h-9 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-blue-500/25 group-hover:shadow-blue-500/40 transition-shadow">
+            <span className="text-white font-bold text-sm tracking-tight">
+              SG
+            </span>
           </div>
           <span className="text-base font-bold text-gray-900 dark:text-white hidden sm:block tracking-tight">
             Shivam Gupta
@@ -83,7 +87,7 @@ const Navbar = () => {
                 {isActive && (
                   <motion.span
                     layoutId="active-pill"
-                    className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 shadow-md shadow-blue-500/25"
+                    className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 to-violet-600 shadow-md shadow-blue-500/25"
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
@@ -93,51 +97,59 @@ const Navbar = () => {
           })}
         </div>
 
-        {/* CTA Button - Desktop */}
-        <motion.a
-          href="#contact"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.5, duration: 0.4 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="hidden md:inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white text-sm font-semibold shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-shadow"
-        >
-          Get in Touch
-        </motion.a>
+        {/* Theme toggle + CTA - Desktop */}
+        <div className="hidden md:flex items-center gap-3">
+          <ThemeToggle />
+          <Magnet padding={40} magnetStrength={4}>
+            <motion.a
+              href="#contact"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5, duration: 0.4 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-indigo-500 to-violet-600 text-white text-sm font-semibold shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-shadow"
+            >
+              Get in Touch
+            </motion.a>
+          </Magnet>
+        </div>
 
         {/* Mobile Controls */}
-        <motion.button
-          className="md:hidden p-2 rounded-lg hover:bg-gray-200/50 dark:hover:bg-white/10 transition-colors"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          aria-label="Toggle menu"
-        >
-          <AnimatePresence mode="wait">
-            {isMobileMenuOpen ? (
-              <motion.div
-                key="close"
-                initial={{ rotate: -90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: 90, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                <X className="h-5 w-5" />
-              </motion.div>
-            ) : (
-              <motion.div
-                key="menu"
-                initial={{ rotate: 90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: -90, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                <Menu className="h-5 w-5" />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.button>
+        <div className="md:hidden flex items-center gap-2">
+          <ThemeToggle />
+          <motion.button
+            className="p-2 rounded-lg hover:bg-gray-200/50 dark:hover:bg-white/10 transition-colors"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            aria-label="Toggle menu"
+          >
+            <AnimatePresence mode="wait">
+              {isMobileMenuOpen ? (
+                <motion.div
+                  key="close"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <X className="h-5 w-5" />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="menu"
+                  initial={{ rotate: 90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Menu className="h-5 w-5" />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
@@ -148,7 +160,7 @@ const Navbar = () => {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden mx-4 mt-3 rounded-2xl overflow-hidden backdrop-blur-xl bg-white/95 dark:bg-black/90 border border-gray-200/50 dark:border-white/10 shadow-xl"
+            className="md:hidden mx-4 mt-3 rounded-2xl overflow-hidden backdrop-blur-xl bg-background/95 border border-border shadow-xl"
           >
             <div className="py-2">
               {navItems.map((item, index) => {
@@ -176,7 +188,7 @@ const Navbar = () => {
                 <a
                   href="#contact"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="block w-full text-center px-5 py-2.5 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white text-sm font-semibold shadow-lg"
+                  className="block w-full text-center px-5 py-2.5 rounded-full bg-gradient-to-r from-indigo-500 to-violet-600 text-white text-sm font-semibold shadow-lg"
                 >
                   Get in Touch
                 </a>

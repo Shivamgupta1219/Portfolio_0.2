@@ -1,5 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion"; // eslint-disable-line no-unused-vars
+import SectionHeading from "./SectionHeading";
+import SpotlightCard from "./SpotlightCard";
 
 export default function ExperienceSection() {
   const experiences = [
@@ -48,7 +50,7 @@ export default function ExperienceSection() {
   return (
     <section
       id="experience"
-      className="py-24 bg-white text-black dark:bg-black dark:text-white relative isolate overflow-hidden"
+      className="py-24 bg-background text-foreground relative isolate overflow-hidden"
     >
       {/* Background Glow - more subtle */}
       <div className="absolute inset-0 -z-10 pointer-events-none">
@@ -57,38 +59,12 @@ export default function ExperienceSection() {
       </div>
 
       <div className="max-w-5xl mx-auto px-6">
-        {/* Heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/5 mb-4"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-            <span className="text-xs font-mono text-blue-500 tracking-widest uppercase">
-              Work History
-            </span>
-          </motion.div>
-
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
-            Professional{" "}
-            <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-              Experience
-            </span>
-          </h2>
-
-          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Real-world experience building production-grade applications and
-            collaborating with cross-functional teams.
-          </p>
-        </motion.div>
+        <SectionHeading
+          badge="Work History"
+          title="Professional"
+          accent="Experience"
+          description="Real-world experience building production-grade applications and collaborating with cross-functional teams."
+        />
 
         {/* Timeline */}
         <div className="relative">
@@ -106,13 +82,16 @@ export default function ExperienceSection() {
               {/* Dot - more polished */}
               <motion.div
                 whileHover={{ scale: 1.3 }}
-                className="absolute left-0 top-3 w-4 h-4 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 border-4 border-white dark:border-black shadow-lg shadow-blue-500/50"
+                className="absolute left-0 top-3 w-4 h-4 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 border-4 border-background shadow-lg shadow-blue-500/50"
               >
                 <span className="absolute inset-0 rounded-full bg-blue-500 animate-ping opacity-30" />
               </motion.div>
 
               {/* Card */}
-              <div className="bg-white/80 dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 rounded-2xl p-7 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-1 hover:border-blue-500/30 transition-all duration-500">
+              <SpotlightCard
+                spotlightColor="#8b5cf6"
+                className="p-7 rounded-2xl transition-transform duration-500 hover:-translate-y-1"
+              >
                 <div className="flex flex-wrap justify-between items-center mb-3 gap-2">
                   <p className="text-blue-500 text-sm font-mono uppercase tracking-wider font-semibold">
                     {exp.company}
@@ -171,7 +150,7 @@ export default function ExperienceSection() {
                     </span>
                   ))}
                 </div>
-              </div>
+              </SpotlightCard>
             </motion.div>
           ))}
         </div>

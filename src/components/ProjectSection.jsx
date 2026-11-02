@@ -4,6 +4,8 @@ import { ExternalLink, Github } from "lucide-react";
 import { motion } from "framer-motion"; // eslint-disable-line no-unused-vars
 import betterparker from "../assets/better_parker.png";      
 import campusCvImg from "../assets/CampusCV.png";
+import SectionHeading from "./SectionHeading";
+import SpotlightCard from "./SpotlightCard";
 import relproImg from "../assets/relpro_group.jpg";
 const categories = [
   "All",
@@ -86,7 +88,7 @@ const ProjectSection = () => {
       : projects.filter((p) => p.category === activeFilter);
 
   return (
-    <section id="projects" className="py-24 bg-white dark:bg-black relative isolate overflow-hidden">
+    <section id="projects" className="py-24 bg-background relative isolate overflow-hidden">
       {/* Subtle background accent */}
       <div className="absolute inset-0 -z-10 pointer-events-none">
         <div className="absolute top-40 right-20 w-72 h-72 bg-purple-500/10 blur-3xl rounded-full" />
@@ -100,31 +102,13 @@ const ProjectSection = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          {/* Heading - aligned with other sections */}
-          <div className="text-center mb-12">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/5 mb-4"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-              <span className="text-xs font-mono text-blue-500 tracking-widest uppercase">
-                Portfolio
-              </span>
-            </motion.div>
-
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight text-gray-900 dark:text-white">
-              Featured{" "}
-              <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-                Projects
-              </span>
-            </h2>
-
-            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              A curated selection of projects showcasing my technical skills,
-              design sensibility, and problem-solving approach.
-            </p>
-          </div>
+          <SectionHeading
+            badge="Portfolio"
+            title="Featured"
+            accent="Projects"
+            description="A curated selection of projects showcasing my technical skills, design sensibility, and problem-solving approach."
+            className="mb-12"
+          />
 
           {/* Filters with animations */}
           <motion.div
@@ -145,7 +129,7 @@ const ProjectSection = () => {
                 className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300
                   ${
                     activeFilter === category
-                      ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-500/50"
+                      ? "bg-gradient-to-r from-indigo-500 to-violet-500 text-white shadow-lg shadow-blue-500/50"
                       : "border border-gray-300 dark:border-white/20 text-gray-600 dark:text-gray-400 hover:border-blue-500 hover:shadow-md"
                   }`}
               >
@@ -168,7 +152,11 @@ const ProjectSection = () => {
                 transition={{ duration: 0.3, delay: index * 0.1 }}
                 className="group"
               >
-                <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-xl rounded-2xl overflow-hidden h-full flex flex-col border border-transparent hover:border-blue-500/30 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500">
+                <SpotlightCard
+                  spotlightColor="#a855f7"
+                  spotlightSize={320}
+                  className="p-0 rounded-2xl h-full flex flex-col transition-transform duration-500 hover:-translate-y-1.5"
+                >
                   {/* Preview - with proper aspect ratio */}
                   <div className="relative w-full aspect-video bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center overflow-hidden">
                     {typeof project.image === "string" && project.image.length > 5 ? (
@@ -237,7 +225,7 @@ const ProjectSection = () => {
                           href={project.demo}
                           whileHover={{ scale: 1.05, y: -2 }}
                           whileTap={{ scale: 0.95 }}
-                          className="px-4 py-2 text-sm rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 text-white flex items-center gap-2 shadow-lg transition-all"
+                          className="px-4 py-2 text-sm rounded-lg bg-gradient-to-r from-indigo-500 to-violet-500 text-white flex items-center gap-2 shadow-lg transition-all"
                         >
                           <ExternalLink className="h-4 w-4" />
                           Visit Live
@@ -285,14 +273,14 @@ const ProjectSection = () => {
                       {project.tech.map((tech) => (
                         <span
                           key={tech}
-                          className="text-xs px-2 py-1 rounded-md bg-gray-200 dark:bg-white/10 text-gray-600 dark:text-gray-400"
+                          className="text-xs px-2 py-1 rounded-md bg-muted text-muted-foreground border border-border"
                         >
                           {tech}
                         </span>
                       ))}
                     </div>
                   </div>
-                </div>
+                </SpotlightCard>
               </motion.div>
             ))}
           </motion.div>
