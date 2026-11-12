@@ -24,111 +24,41 @@ const Index = () => {
 
   return (
     <>
-      {/* Page Loading Animation - Professional minimalist loader */}
+      {/* Loader: name and a progress line, then the curtain lifts */}
       <AnimatePresence>
         {isLoading && (
           <motion.div
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.6, ease: "easeInOut" }}
-            className="fixed inset-0 z-[200] bg-background flex items-center justify-center overflow-hidden"
+            initial={{ y: 0 }}
+            exit={{ y: "-100%" }}
+            transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-background"
           >
-            {/* Subtle background gradient */}
-            <div className="absolute inset-0">
-              <motion.div
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-indigo-500/20 via-violet-500/20 to-fuchsia-500/20 blur-3xl"
-                animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.8, 0.4] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-            </div>
-
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="relative text-center"
-            >
-              {/* Logo with elegant animation */}
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 200,
-                  damping: 20,
-                  delay: 0.1,
-                }}
-                className="mb-8 inline-block"
-              >
-                <div className="relative w-20 h-20 mx-auto">
-                  {/* Outer rotating ring */}
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "linear",
-                    }}
-                    className="absolute inset-0 rounded-full border-2 border-transparent border-t-blue-500 border-r-purple-500"
-                  />
-                  {/* Inner counter-rotating ring */}
-                  <motion.div
-                    animate={{ rotate: -360 }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "linear",
-                    }}
-                    className="absolute inset-2 rounded-full border-2 border-transparent border-b-pink-500 border-l-blue-500"
-                  />
-                  {/* Center text */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-2xl font-bold bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent font-mono">
-                      SG
-                    </span>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Name */}
-              <motion.h2
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.5 }}
-                className="text-xl font-semibold text-foreground tracking-wider"
+            <div className="w-64 text-center">
+              <motion.p
+                initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                className="font-serif italic text-5xl leading-none text-foreground"
               >
                 Shivam Gupta
-              </motion.h2>
-
+              </motion.p>
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.6, duration: 0.5 }}
-                className="text-sm text-muted-foreground font-mono mt-2 tracking-widest uppercase"
+                transition={{ delay: 0.3, duration: 0.6 }}
+                className="mt-3 font-mono text-[11px] uppercase tracking-[0.24em] text-muted-foreground"
               >
-                Loading Portfolio
+                Full Stack Developer
               </motion.p>
-
-              {/* Progress dots */}
-              <div className="flex items-center justify-center gap-1.5 mt-6">
-                {[0, 1, 2].map((i) => (
-                  <motion.span
-                    key={i}
-                    animate={{
-                      opacity: [0.3, 1, 0.3],
-                      scale: [0.8, 1.2, 0.8],
-                    }}
-                    transition={{
-                      duration: 1.2,
-                      repeat: Infinity,
-                      delay: i * 0.2,
-                    }}
-                    className="w-1.5 h-1.5 rounded-full bg-blue-500"
-                  />
-                ))}
+              <div className="mt-8 h-px w-full overflow-hidden bg-border">
+                <motion.div
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: 1.3, ease: [0.65, 0, 0.35, 1] }}
+                  className="h-full origin-left bg-brand"
+                />
               </div>
-            </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -142,7 +72,7 @@ const Index = () => {
           sparkCount={10}
           duration={450}
         >
-          <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+          <div className="min-h-screen bg-background text-foreground overflow-x-clip">
             <Navbar />
 
             <main>

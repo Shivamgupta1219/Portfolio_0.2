@@ -2,18 +2,20 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
-@import "@fontsource-variable/space-grotesk";
-@import "@fontsource-variable/jetbrains-mono";
+@import "@fontsource-variable/geist-mono";
+@import "@fontsource/instrument-serif/400.css";
+@import "@fontsource/instrument-serif/400-italic.css";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
     --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
-    --font-heading: 'Space Grotesk Variable', 'Geist Variable', sans-serif;
-    --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
-    --color-brand-1: var(--brand-1);
+    --font-heading: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+    --font-serif: 'Instrument Serif', ui-serif, Georgia, serif;
+    --font-mono: 'Geist Mono Variable', ui-monospace, monospace;
+    --color-brand: var(--brand);
     --color-brand-2: var(--brand-2);
-    --color-brand-3: var(--brand-3);
+    --color-brand-foreground: var(--brand-foreground);
     --color-sidebar-ring: var(--sidebar-ring);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -55,28 +57,28 @@
 }
 
 :root {
-    /* Day: cool off-white page, white cards, ink text */
-    --background: oklch(0.982 0.004 270);
-    --foreground: oklch(0.2 0.02 270);
+    /* Day: warm stone paper, ink text, one signal-orange accent */
+    --background: oklch(0.985 0.002 75);
+    --foreground: oklch(0.216 0.006 56);
     --card: oklch(1 0 0);
-    --card-foreground: oklch(0.2 0.02 270);
+    --card-foreground: oklch(0.216 0.006 56);
     --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.2 0.02 270);
-    --primary: oklch(0.55 0.22 285);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.955 0.008 270);
-    --secondary-foreground: oklch(0.25 0.02 270);
-    --muted: oklch(0.955 0.008 270);
-    --muted-foreground: oklch(0.5 0.02 270);
-    --accent: oklch(0.95 0.02 285);
-    --accent-foreground: oklch(0.3 0.08 285);
+    --popover-foreground: oklch(0.216 0.006 56);
+    --primary: oklch(0.216 0.006 56);
+    --primary-foreground: oklch(0.985 0.002 75);
+    --secondary: oklch(0.96 0.003 75);
+    --secondary-foreground: oklch(0.268 0.007 34);
+    --muted: oklch(0.96 0.003 75);
+    --muted-foreground: oklch(0.52 0.012 58);
+    --accent: oklch(0.96 0.03 50);
+    --accent-foreground: oklch(0.4 0.12 40);
     --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.9 0.01 270);
-    --input: oklch(0.9 0.01 270);
-    --ring: oklch(0.6 0.2 285);
-    --brand-1: #6366f1;
-    --brand-2: #a855f7;
-    --brand-3: #ec4899;
+    --border: oklch(0.915 0.004 70);
+    --input: oklch(0.915 0.004 70);
+    --ring: oklch(0.65 0.2 40);
+    --brand: oklch(0.645 0.215 38);
+    --brand-2: oklch(0.76 0.17 62);
+    --brand-foreground: oklch(0.99 0 0);
     --chart-1: oklch(0.87 0 0);
     --chart-2: oklch(0.556 0 0);
     --chart-3: oklch(0.439 0 0);
@@ -94,28 +96,28 @@
 }
 
 .dark {
-    /* Night: deep ink page with a faint violet tint */
-    --background: oklch(0.145 0.012 275);
-    --foreground: oklch(0.97 0.005 270);
-    --card: oklch(0.19 0.015 275);
-    --card-foreground: oklch(0.97 0.005 270);
-    --popover: oklch(0.19 0.015 275);
-    --popover-foreground: oklch(0.97 0.005 270);
-    --primary: oklch(0.7 0.17 285);
-    --primary-foreground: oklch(0.15 0.02 275);
-    --secondary: oklch(0.23 0.015 275);
-    --secondary-foreground: oklch(0.97 0.005 270);
-    --muted: oklch(0.23 0.015 275);
-    --muted-foreground: oklch(0.72 0.015 270);
-    --accent: oklch(0.25 0.04 285);
-    --accent-foreground: oklch(0.97 0.005 270);
+    /* Night: warm near-black, soft white text, brighter orange */
+    --background: oklch(0.155 0.004 50);
+    --foreground: oklch(0.97 0.003 75);
+    --card: oklch(0.195 0.005 50);
+    --card-foreground: oklch(0.97 0.003 75);
+    --popover: oklch(0.195 0.005 50);
+    --popover-foreground: oklch(0.97 0.003 75);
+    --primary: oklch(0.97 0.003 75);
+    --primary-foreground: oklch(0.155 0.004 50);
+    --secondary: oklch(0.24 0.006 50);
+    --secondary-foreground: oklch(0.97 0.003 75);
+    --muted: oklch(0.24 0.006 50);
+    --muted-foreground: oklch(0.71 0.01 60);
+    --accent: oklch(0.28 0.05 45);
+    --accent-foreground: oklch(0.97 0.003 75);
     --destructive: oklch(0.704 0.191 22.216);
     --border: oklch(1 0 0 / 9%);
     --input: oklch(1 0 0 / 12%);
-    --ring: oklch(0.7 0.17 285);
-    --brand-1: #818cf8;
-    --brand-2: #c084fc;
-    --brand-3: #f472b6;
+    --ring: oklch(0.72 0.18 45);
+    --brand: oklch(0.7 0.2 42);
+    --brand-2: oklch(0.8 0.16 70);
+    --brand-foreground: oklch(0.155 0.004 50);
     --chart-1: oklch(0.87 0 0);
     --chart-2: oklch(0.556 0 0);
     --chart-3: oklch(0.439 0 0);
@@ -144,7 +146,7 @@
   }
   h1, h2, h3, h4 {
     font-family: var(--font-heading);
-    letter-spacing: -0.025em;
+    letter-spacing: -0.035em;
   }
   html {
     @apply font-sans;
@@ -154,7 +156,7 @@
 
   /* Custom selection color */
   ::selection {
-    background-color: rgba(59, 130, 246, 0.25);
+    background-color: color-mix(in oklch, var(--brand) 30%, transparent);
     color: inherit;
   }
 
@@ -167,13 +169,13 @@
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #3b82f6, #8b5cf6);
+    background: color-mix(in oklch, var(--foreground) 25%, transparent);
     border-radius: 5px;
     border: 2px solid transparent;
     background-clip: padding-box;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #2563eb, #7c3aed);
+    background: var(--brand);
     background-clip: padding-box;
     border: 2px solid transparent;
   }
@@ -205,6 +207,24 @@
   pointer-events: none;
   opacity: 0.02;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* Hairline grid backdrop for the hero, faded toward the edges */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, var(--border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 40%, transparent 100%);
+}
+
+/* Infinite marquee used by the tech strip */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 40s linear infinite;
 }
 
 /* Glow utility */

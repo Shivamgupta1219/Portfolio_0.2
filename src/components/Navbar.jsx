@@ -56,18 +56,18 @@ const Navbar = () => {
           whileHover={{ scale: 1.05 }}
           className="flex items-center gap-2 group"
         >
-          <div className="relative w-9 h-9 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-blue-500/25 group-hover:shadow-blue-500/40 transition-shadow">
-            <span className="text-white font-bold text-sm tracking-tight">
+          <div className="relative w-9 h-9 rounded-xl bg-foreground flex items-center justify-center shadow-sm group-hover:bg-brand transition-colors duration-300">
+            <span className="text-background font-serif italic text-lg leading-none">
               SG
             </span>
           </div>
-          <span className="text-base font-bold text-gray-900 dark:text-white hidden sm:block tracking-tight">
+          <span className="text-base font-semibold text-foreground hidden sm:block tracking-tight">
             Shivam Gupta
           </span>
         </motion.a>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-1 bg-gray-100/50 dark:bg-white/5 rounded-full p-1 backdrop-blur-lg border border-gray-200/50 dark:border-white/5">
+        <div className="hidden md:flex items-center gap-1 bg-card/60 rounded-full p-1 backdrop-blur-lg border border-border shadow-sm">
           {navItems.map((item, index) => {
             const sectionId = item.href.replace("#", "");
             const isActive = activeSection === sectionId;
@@ -80,14 +80,14 @@ const Navbar = () => {
                 transition={{ delay: 0.1 * index, duration: 0.4 }}
                 className={`relative px-4 py-1.5 text-sm font-medium rounded-full transition-colors ${
                   isActive
-                    ? "text-white"
-                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                    ? "text-background"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {isActive && (
                   <motion.span
                     layoutId="active-pill"
-                    className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 to-violet-600 shadow-md shadow-blue-500/25"
+                    className="absolute inset-0 rounded-full bg-foreground shadow-sm"
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
@@ -108,7 +108,7 @@ const Navbar = () => {
               transition={{ delay: 0.5, duration: 0.4 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-indigo-500 to-violet-600 text-white text-sm font-semibold shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-shadow"
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-foreground text-background text-sm font-medium shadow-sm hover:bg-brand hover:text-brand-foreground transition-colors duration-300"
             >
               Get in Touch
             </motion.a>
@@ -119,7 +119,7 @@ const Navbar = () => {
         <div className="md:hidden flex items-center gap-2">
           <ThemeToggle />
           <motion.button
-            className="p-2 rounded-lg hover:bg-gray-200/50 dark:hover:bg-white/10 transition-colors"
+            className="p-2 rounded-lg hover:bg-muted transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
@@ -176,8 +176,8 @@ const Navbar = () => {
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`block px-6 py-3 transition-colors font-medium ${
                       isActive
-                        ? "text-blue-500 bg-blue-500/10"
-                        : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5"
+                        ? "text-brand bg-brand/10"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
                     }`}
                   >
                     {item.name}
@@ -188,7 +188,7 @@ const Navbar = () => {
                 <a
                   href="#contact"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="block w-full text-center px-5 py-2.5 rounded-full bg-gradient-to-r from-indigo-500 to-violet-600 text-white text-sm font-semibold shadow-lg"
+                  className="block w-full text-center px-5 py-2.5 rounded-full bg-foreground text-background text-sm font-medium"
                 >
                   Get in Touch
                 </a>

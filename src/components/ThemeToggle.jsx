@@ -14,7 +14,7 @@ const ThemeToggle = ({ className = "" }) => {
       whileTap={{ scale: 0.92 }}
       aria-label={isDark ? "Switch to day mode" : "Switch to dark mode"}
       title={isDark ? "Day mode" : "Dark mode"}
-      className={`relative w-10 h-10 rounded-full flex items-center justify-center overflow-hidden border border-border bg-card/70 backdrop-blur-lg text-foreground shadow-sm hover:border-violet-500/40 hover:shadow-violet-500/20 hover:shadow-lg transition-[border-color,box-shadow] ${className}`}
+      className={`relative w-10 h-10 rounded-full flex items-center justify-center overflow-hidden border border-border bg-card/70 backdrop-blur-lg text-foreground shadow-sm hover:border-brand/40 hover:shadow-brand/20 hover:shadow-lg transition-[border-color,box-shadow] ${className}`}
     >
       <AnimatePresence mode="wait" initial={false}>
         <motion.span
@@ -26,7 +26,7 @@ const ThemeToggle = ({ className = "" }) => {
           className="flex"
         >
           {isDark ? (
-            <Moon className="h-[18px] w-[18px] text-violet-300" />
+            <Moon className="h-[18px] w-[18px] text-brand" />
           ) : (
             <Sun className="h-[18px] w-[18px] text-amber-500" />
           )}

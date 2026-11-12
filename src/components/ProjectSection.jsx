@@ -1,20 +1,14 @@
-import { useInView } from "framer-motion";
-import { useRef, useState } from "react";
-import { ExternalLink, Github } from "lucide-react";
-import { motion } from "framer-motion"; // eslint-disable-line no-unused-vars
-import betterparker from "../assets/better_parker.png";      
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion"; // eslint-disable-line no-unused-vars
+import { ArrowUpRight, Github } from "lucide-react";
+import betterparker from "../assets/better_parker.png";
 import campusCvImg from "../assets/CampusCV.png";
-import SectionHeading from "./SectionHeading";
-import SpotlightCard from "./SpotlightCard";
 import relproImg from "../assets/relpro_group.jpg";
-const categories = [
-  "All",
-  // "Frontend",
-  // "Backend",
-  "Full Stack",
-  "Data Analysis",
-  "Freelance",
-];
+import SectionHeading from "./SectionHeading";
+
+const categories = ["All", "Full Stack", "Data Analysis", "Freelance"];
+
+// Newest first; the first project is featured full-width under "All"
 const projects = [
   {
     id: 5,
@@ -42,17 +36,15 @@ const projects = [
   },
   {
     id: 2,
-    title: "Campus CV - Major Project BCA",
+    title: "Campus CV — Major Project BCA",
     description:
       "A full-stack AI-powered resume builder that helps students create professional resumes with smart suggestions and customizable templates.",
     category: "Full Stack",
     tech: ["React", "Node.js", "MongoDB", "AI"],
     image: campusCvImg,
-    github:
-      "https://github.com/Shivamgupta1219/Major_Project_BCA",
+    github: "https://github.com/Shivamgupta1219/Major_Project_BCA",
     demo: "https://major-project-bca.vercel.app/",
   },
-
   {
     id: 4,
     title: "Customer Trend Analysis",
@@ -65,233 +57,203 @@ const projects = [
       "https://github.com/Shivamgupta1219/Customer-Behavior-Dashboard-Data-Analysis-",
     demo: "#",
   },
-  // {
-  //   id: 5,
-  //   title: "Task Management App",
-  //   description:
-  //     "Kanban-style project management with real-time collaboration features.",
-  //   category: "Frontend",
-  //   tech: ["React", "Tailwind", "Firebase"],
-  //   image: "📋",
-  //   github: "#",
-  //   demo: "#",
-  // },
 ];
+
+const hasLink = (url) => Boolean(url) && url !== "#";
+
+const ProjectCard = ({ project, featured, index }) => {
+  const primaryLink = hasLink(project.demo) ? project.demo : project.github;
+  // Imported images resolve to a URL; anything else is an emoji placeholder
+  const isImage = project.image.includes("/");
+
+  return (
+    <motion.article
+      layout
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.96 }}
+      transition={{ duration: 0.6, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+      className={`group ${featured ? "md:col-span-2" : ""}`}
+    >
+      <div className="h-full flex flex-col overflow-hidden rounded-3xl border border-border bg-card transition-[border-color,box-shadow] duration-500 hover:border-foreground/15 hover:shadow-2xl hover:shadow-black/5">
+        {/* Preview */}
+        <a
+          href={hasLink(primaryLink) ? primaryLink : undefined}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Open ${project.title}`}
+          className={`relative block overflow-hidden bg-muted ${
+            featured ? "aspect-[16/10] md:aspect-[2/1]" : "aspect-[16/10]"
+          }`}
+        >
+          {isImage ? (
+            <img
+              src={project.image}
+              alt={project.title}
+              loading="lazy"
+              className="h-full w-full object-cover object-top transition-transform duration-[1.2s] ease-out group-hover:scale-[1.04]"
+            />
+          ) : (
+            <div className="absolute inset-0 grid place-items-center">
+              <div className="absolute inset-0 bg-grid" />
+              <span className="relative text-7xl transition-transform duration-700 group-hover:scale-110">
+                {project.image}
+              </span>
+            </div>
+          )}
+
+          <div className="absolute left-4 top-4 flex flex-wrap gap-2">
+            {project.isFreelance && (
+              <span className="rounded-full bg-background/85 backdrop-blur px-3 py-1 text-xs font-medium text-foreground shadow-sm">
+                Client work
+              </span>
+            )}
+            {hasLink(project.demo) && (
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-background/85 backdrop-blur px-3 py-1 text-xs font-medium text-foreground shadow-sm">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                Live
+              </span>
+            )}
+          </div>
+
+          {hasLink(primaryLink) && (
+            <span className="absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-full bg-foreground text-background opacity-0 -translate-y-2 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
+              <ArrowUpRight className="h-5 w-5" />
+            </span>
+          )}
+        </a>
+
+        {/* Details */}
+        <div
+          className={`flex flex-1 flex-col gap-6 p-6 md:p-8 ${
+            featured ? "md:flex-row md:items-end md:justify-between" : ""
+          }`}
+        >
+          <div className="flex-1">
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+              {String(index + 1).padStart(2, "0")} · {project.category}
+            </p>
+            <h3
+              className={`mt-3 font-semibold tracking-[-0.03em] text-foreground ${
+                featured ? "text-2xl md:text-4xl" : "text-2xl"
+              }`}
+            >
+              {project.title}
+            </h3>
+            <p className="mt-3 max-w-xl leading-relaxed text-muted-foreground">
+              {project.description}
+            </p>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {project.tech.map((tech) => (
+                <span
+                  key={tech}
+                  className="rounded-full border border-border px-3 py-1 text-xs font-medium text-foreground/75"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex shrink-0 gap-2">
+            {hasLink(project.demo) && (
+              <a
+                href={project.demo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-colors duration-300 hover:bg-brand hover:text-brand-foreground"
+              >
+                Visit live
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
+            )}
+            {hasLink(project.github) && (
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-full border border-border px-5 py-2.5 text-sm font-medium text-foreground transition-colors duration-300 hover:border-foreground/30"
+              >
+                <Github className="h-4 w-4" />
+                Code
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </motion.article>
+  );
+};
+
 const ProjectSection = () => {
   const [activeFilter, setActiveFilter] = useState("All");
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const filteredProjects =
     activeFilter === "All"
       ? projects
       : projects.filter((p) => p.category === activeFilter);
 
+  // Feature the newest project under "All", and stretch any card that
+  // would otherwise sit alone in the last row
+  const isFeatured = (index) => {
+    const leadFeatured = activeFilter === "All";
+    if (leadFeatured && index === 0) return true;
+    const rest = filteredProjects.length - (leadFeatured ? 1 : 0);
+    const position = index - (leadFeatured ? 1 : 0);
+    return rest % 2 === 1 && position === rest - 1;
+  };
+
   return (
-    <section id="projects" className="py-24 bg-background relative isolate overflow-hidden">
-      {/* Subtle background accent */}
-      <div className="absolute inset-0 -z-10 pointer-events-none">
-        <div className="absolute top-40 right-20 w-72 h-72 bg-purple-500/10 blur-3xl rounded-full" />
-        <div className="absolute bottom-40 left-20 w-72 h-72 bg-blue-500/10 blur-3xl rounded-full" />
-      </div>
-
+    <section
+      id="projects"
+      className="relative isolate overflow-hidden bg-background py-28 md:py-36"
+    >
       <div className="max-w-6xl mx-auto px-6">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-        >
-          <SectionHeading
-            badge="Portfolio"
-            title="Featured"
-            accent="Projects"
-            description="A curated selection of projects showcasing my technical skills, design sensibility, and problem-solving approach."
-            className="mb-12"
-          />
+        <SectionHeading
+          index="02"
+          badge="Selected work"
+          title="Things I've"
+          accent="shipped"
+          description="A curated selection of client work and personal builds — showcasing my technical skills, design sensibility, and problem-solving approach."
+          className="mb-12"
+        />
 
-          {/* Filters with animations */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="flex flex-wrap justify-center gap-3 mb-12"
-          >
-            {categories.map((category, index) => (
-              <motion.button
-                key={category}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ delay: 0.3 + index * 0.05, duration: 0.4 }}
-                onClick={() => setActiveFilter(category)}
-                whileHover={{ scale: 1.08 }}
-                whileTap={{ scale: 0.95 }}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300
-                  ${
-                    activeFilter === category
-                      ? "bg-gradient-to-r from-indigo-500 to-violet-500 text-white shadow-lg shadow-blue-500/50"
-                      : "border border-gray-300 dark:border-white/20 text-gray-600 dark:text-gray-400 hover:border-blue-500 hover:shadow-md"
-                  }`}
-              >
-                {category}
-              </motion.button>
-            ))}
-          </motion.div>
-
-          {/* Projects Grid */}
-          <motion.div
-            layout
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            {filteredProjects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-                className="group"
-              >
-                <SpotlightCard
-                  spotlightColor="#a855f7"
-                  spotlightSize={320}
-                  className="p-0 rounded-2xl h-full flex flex-col transition-transform duration-500 hover:-translate-y-1.5"
-                >
-                  {/* Preview - with proper aspect ratio */}
-                  <div className="relative w-full aspect-video bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center overflow-hidden">
-                    {typeof project.image === "string" && project.image.length > 5 ? (
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        loading="lazy"
-                        className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
-                      />
-                    ) : (
-                      <motion.div
-                        className="text-7xl"
-                        whileHover={{ scale: 1.2, rotate: 10 }}
-                        transition={{ type: "spring", stiffness: 200 }}
-                      >
-                        {project.image}
-                      </motion.div>
-                    )}
-
-                    {/* Freelance Badge */}
-                    {project.isFreelance && (
-                      <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="absolute top-3 left-3 px-3 py-1 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-bold flex items-center gap-1 shadow-lg"
-                      >
-                        💼 Freelance
-                      </motion.div>
-                    )}
-
-                    {/* Live Badge for projects with direct demo links */}
-                    {project.demo && project.demo !== "#" && (
-                      <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="absolute top-3 right-3 px-3 py-1 rounded-full bg-green-500/90 backdrop-blur text-white text-xs font-bold flex items-center gap-1.5 shadow-lg"
-                      >
-                        <motion.span
-                          animate={{ scale: [1, 1.3, 1], opacity: [1, 0.5, 1] }}
-                          transition={{ duration: 1.5, repeat: Infinity }}
-                          className="w-2 h-2 bg-white rounded-full"
-                        />
-                        Live
-                      </motion.div>
-                    )}
-
-                    {/* Hover buttons */}
-                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex justify-center gap-3">
-                      {project.github && project.github !== "#" && (
-                        <motion.a
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          href={project.github}
-                          whileHover={{ scale: 1.05, y: -2 }}
-                          whileTap={{ scale: 0.95 }}
-                          className="px-4 py-2 text-sm rounded-lg bg-black/70 backdrop-blur text-white flex items-center gap-2 hover:bg-black transition-all"
-                        >
-                          <Github className="h-4 w-4" />
-                          Code
-                        </motion.a>
-                      )}
-                      {project.demo && project.demo !== "#" && (
-                        <motion.a
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          href={project.demo}
-                          whileHover={{ scale: 1.05, y: -2 }}
-                          whileTap={{ scale: 0.95 }}
-                          className="px-4 py-2 text-sm rounded-lg bg-gradient-to-r from-indigo-500 to-violet-500 text-white flex items-center gap-2 shadow-lg transition-all"
-                        >
-                          <ExternalLink className="h-4 w-4" />
-                          Visit Live
-                        </motion.a>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Info */}
-                  <div className="p-6 flex flex-col flex-1">
-                    <div className="flex justify-between items-start mb-2 gap-2">
-                      <h3 className="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-blue-500 transition-colors duration-300">
-                        {project.title}
-                      </h3>
-                      <span
-                        className={`text-xs font-mono px-2 py-1 rounded-full whitespace-nowrap ${
-                          project.isFreelance
-                            ? "bg-amber-500/10 text-amber-600 dark:text-amber-400"
-                            : "bg-blue-500/10 text-blue-500"
-                        }`}
-                      >
-                        {project.category}
-                      </span>
-                    </div>
-
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 flex-1">
-                      {project.description}
-                    </p>
-
-                    {/* Direct Visit Link - Always Visible for live projects */}
-                    {project.demo && project.demo !== "#" && (
-                      <motion.a
-                        href={project.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        whileHover={{ x: 5 }}
-                        className="text-sm text-blue-500 hover:text-purple-500 font-medium mb-3 flex items-center gap-1 group/link"
-                      >
-                        Visit Project
-                        <ExternalLink className="h-3 w-3 group-hover/link:translate-x-1 transition-transform" />
-                      </motion.a>
-                    )}
-
-                    <div className="flex flex-wrap gap-2">
-                      {project.tech.map((tech) => (
-                        <span
-                          key={tech}
-                          className="text-xs px-2 py-1 rounded-md bg-muted text-muted-foreground border border-border"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </SpotlightCard>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {/* View More */}
-          {/* <div className="text-center mt-12">
-            <button className="px-8 py-3 rounded-lg border border-blue-500/40 text-blue-500 hover:bg-blue-500/10 transition flex items-center gap-2 mx-auto">
-              <Layers className="h-5 w-5" />
-              View All Projects
+        {/* Filter tabs with a sliding ink pill */}
+        <div className="mb-10 inline-flex max-w-full overflow-x-auto rounded-full border border-border bg-card/60 p-1 shadow-sm">
+          {categories.map((category) => (
+            <button
+              key={category}
+              type="button"
+              onClick={() => setActiveFilter(category)}
+              className={`relative whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                activeFilter === category
+                  ? "text-background"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {activeFilter === category && (
+                <motion.span
+                  layoutId="project-filter"
+                  className="absolute inset-0 rounded-full bg-foreground"
+                  transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                />
+              )}
+              <span className="relative">{category}</span>
             </button>
-          </div> */}
+          ))}
+        </div>
+
+        <motion.div layout className="grid md:grid-cols-2 gap-6">
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project, index) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                index={index}
+                featured={isFeatured(index)}
+              />
+            ))}
+          </AnimatePresence>
         </motion.div>
       </div>
     </section>
